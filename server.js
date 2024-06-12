@@ -59,6 +59,7 @@ app.get("/numbers/:numberid", async (req, res) => {
   res.json(response);
 });
 
+// server running code
 app.listen(PORT, () => {
-  console.log(`Average Calculator Microservice running on port ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
