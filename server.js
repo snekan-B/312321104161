@@ -36,6 +36,29 @@ const updateWindow = (newNumbers) => {
   return prevWindowState;
 };
 
+const calculateAverage = (numbers) => {
+  if (numbers.length === 0) return 0;
+  const sum = numbers.reduce((acc, num) => acc + num, 0);
+  return (sum / numbers.length).toFixed(2);
+};
+
+// Route to handle numbers/{numberid}
+app.get("/numbers/:numberid", async (req, res) => {
+  const { numberid } = req.params;
+  const newNumbers = await NumberValues(numberid);
+  const prevWindowState = updateWindow(newNumbers);
+  const avg = calculateAverage(windowNumbers);
+
+  const response = {
+    numbers: newNumbers,
+    windowPrevstate: prevWindowState,
+    windowCurrstate: windowNumbers,
+    avg,
+  };
+
+  res.json(response);
+});
+
 app.listen(PORT, () => {
   console.log(`Average Calculator Microservice running on port ${PORT}`);
 });
